@@ -1,13 +1,14 @@
-install xampp
-composer install
-create db
-run migrations
-create host
-    enable virtual hosts
-    add virtual host
-        httpd-vhosts.conf
+# gym-api
 
-        <VirtualHost *:80>
+## Project setup
+```
+### Install xampp and clone repo into htdocs
+```
+### Install xampp and clone repo into htdocs
+```
+- update etc/httpd.conf in xampp and uncomment 'Include /Applications/XAMPP/etc/extra/httpd-vhosts.conf'
+- add to etc/extra/httpd-vhosts.conf in xampp:
+<VirtualHost *:80>
             ServerName localhost
             DocumentRoot "/Applications/XAMPP/xamppfiles/htdocs"
             <Directory "/Applications/XAMPP/xamppfiles/htdocs">
@@ -27,6 +28,11 @@ create host
                 Require all granted
             </Directory>
         </VirtualHost>
+- add 127.0.0.1 atom42.gym to host file
 
-        edit hosts file
-        127.0.0.1 atom42.gym
+### Enter project root and run bin/console composer install
+```
+### Run bin/console doctrine:database:create
+```
+### Run bin/console doctrine:migrations:migrate
+```
