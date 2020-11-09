@@ -1,0 +1,32 @@
+install xampp
+composer install
+create db
+run migrations
+create host
+    enable virtual hosts
+    add virtual host
+        httpd-vhosts.conf
+
+        <VirtualHost *:80>
+            ServerName localhost
+            DocumentRoot "/Applications/XAMPP/xamppfiles/htdocs"
+            <Directory "/Applications/XAMPP/xamppfiles/htdocs">
+                Options Indexes FollowSymLinks Includes execCGI
+                AllowOverride All
+                Require all granted
+            </Directory>
+        </VirtualHost>
+
+        # My custom host
+        <VirtualHost *:80>
+            ServerName atom42.gym
+            DocumentRoot "/Applications/XAMPP/xamppfiles/htdocs/gym_api/public"
+            <Directory "/Applications/XAMPP/xamppfiles/htdocs/gym_api/public">
+                Options Indexes FollowSymLinks Includes ExecCGI
+                AllowOverride All
+                Require all granted
+            </Directory>
+        </VirtualHost>
+
+        edit hosts file
+        127.0.0.1 atom42.gym
