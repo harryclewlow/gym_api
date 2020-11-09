@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20201108224747 extends AbstractMigration
+final class Version20201109203818 extends AbstractMigration
 {
     public function getDescription() : string
     {
@@ -20,6 +20,7 @@ final class Version20201108224747 extends AbstractMigration
     public function up(Schema $schema) : void
     {
         // this up() migration is auto-generated, please modify it to your needs
+        $this->addSql('CREATE TABLE gym (id INT AUTO_INCREMENT NOT NULL, name VARCHAR(255) NOT NULL, date_created DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE member (id INT AUTO_INCREMENT NOT NULL, given_names VARCHAR(255) NOT NULL, surname VARCHAR(255) NOT NULL, email VARCHAR(255) NOT NULL, mobile_number VARCHAR(32) NOT NULL, postcode VARCHAR(32) NOT NULL, date_of_birth DATETIME NOT NULL, terms_accepted TINYINT(1) NOT NULL, newsletter_accepted TINYINT(1) DEFAULT \'0\' NOT NULL, date_created DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL, UNIQUE INDEX email_unique (email), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE member_membership (id INT AUTO_INCREMENT NOT NULL, member_id INT DEFAULT NULL, membership_id INT DEFAULT NULL, hash VARCHAR(255) NOT NULL, expiry_date DATETIME DEFAULT NULL, start_date DATETIME DEFAULT NULL, status INT NOT NULL, date_created DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL, INDEX IDX_6DB1CC6C7597D3FE (member_id), INDEX IDX_6DB1CC6C1FB354CD (membership_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE membership (id INT AUTO_INCREMENT NOT NULL, membership_type_id INT DEFAULT NULL, gym_id INT DEFAULT NULL, hash VARCHAR(255) NOT NULL, price DOUBLE PRECISION NOT NULL, date_created DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL, INDEX IDX_86FFD2854CE11AC2 (membership_type_id), INDEX IDX_86FFD285BD2F03 (gym_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
@@ -59,9 +60,11 @@ final class Version20201108224747 extends AbstractMigration
     public function down(Schema $schema) : void
     {
         // this down() migration is auto-generated, please modify it to your needs
+        $this->addSql('ALTER TABLE membership DROP FOREIGN KEY FK_86FFD285BD2F03');
         $this->addSql('ALTER TABLE member_membership DROP FOREIGN KEY FK_6DB1CC6C7597D3FE');
         $this->addSql('ALTER TABLE member_membership DROP FOREIGN KEY FK_6DB1CC6C1FB354CD');
         $this->addSql('ALTER TABLE membership DROP FOREIGN KEY FK_86FFD2854CE11AC2');
+        $this->addSql('DROP TABLE gym');
         $this->addSql('DROP TABLE member');
         $this->addSql('DROP TABLE member_membership');
         $this->addSql('DROP TABLE membership');
